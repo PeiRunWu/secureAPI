@@ -1,0 +1,19 @@
+server:
+  port: 2000
+
+spring:
+  application:
+    name: secure-framework
+  cloud:
+    nacos:
+      server-addr: 192.168.31.50:8848
+      config:
+        namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
+        file-extension: yml
+        group: DEFAULT_GROUP
+        refresh-enabled: true
+      discovery:
+        namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
+        group: DEFAULT_GROUP
+        register-enabled: true
+

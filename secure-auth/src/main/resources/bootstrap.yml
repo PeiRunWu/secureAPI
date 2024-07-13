@@ -1,0 +1,38 @@
+server:
+  port: 3000
+
+spring:
+  application:
+    name: secure-auth
+  cloud:
+    nacos:
+      server-addr: 192.168.31.50:8848
+      config:
+        namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
+        group: DEFAULT_GROUP
+        file-extension: yml
+        refresh-enabled: true
+        extension-configs:
+          - data-id: secure-dataSource.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+          - data-id: secure-mybatis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+          - data-id: secure-feign.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+          - data-id: secure-redis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+      discovery:
+        namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
+        group: DEFAULT_GROUP
+        register-enabled: true
+
+
+
+

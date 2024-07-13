@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carole.secure.system.mapper.SysRoleMapper">
+
+    <insert id="insert" keyProperty="id" keyColumn="id">
+        INSERT INTO sys_role (id, role_name, status)
+        VALUES (#{param.id},
+                #{param.roleName},
+                #{param.status})
+    </insert>
+
+    <update id="updateRoleInfo">
+        UPDATE sys_role
+        <set>
+            <if test="param.roleName !='' and param.roleName !=null ">
+                role_name = #{param.roleName},
+            </if>
+            <if test="param.status !=null ">
+                `status` = #{param.status},
+            </if>
+        </set>
+        WHERE id = #{param.id}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM sys_role
+        WHERE id = #{roleId}
+    </delete>
+
+    <select id="getRoleInfoByPage" resultType="com.carole.secure.system.model.dto.SysRoleDTO">
+        SELECT id, role_name, status, create_time, update_time
+        FROM sys_role
+        <where>
+            <if test="param.roleName != null and param.roleName != '' ">
+                role_name LIKE CONCAT ('%',#{param.roleName},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="checkRoleNameIsExist" resultType="java.lang.Boolean">
+        <![CDATA[
+        SELECT COUNT(id)
+        FROM sys_role
+        WHERE role_name = #{roleName}
+        ]]>
+    </select>
+
+    <select id="getRoleInfoExcludeHidden" resultType="com.carole.secure.system.model.dto.SysRoleDTO">
+        SELECT id, role_name, status, create_time, update_time
+        FROM sys_role
+        WHERE status &lt;&gt; 0
+    </select>
+</mapper>
+

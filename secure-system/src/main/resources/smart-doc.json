@@ -1,0 +1,7 @@
+{
+  "outPath": "D:\\代码\\secureAPI\\smart-doc",
+  "serverEnv": "http://{{server}}",
+  "allInOne": true,
+  "coverOld": true,
+  "showAuthor":true
+}
