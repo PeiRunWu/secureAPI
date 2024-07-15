@@ -16,14 +16,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.carole.secure.common.config.ElasticSearchConfig;
 import com.carole.secure.common.context.ElasticContext;
 import com.carole.secure.common.exception.DataException;
 import com.carole.secure.common.type.ErrorType;
 import com.carole.secure.common.util.PageUtil;
+import com.carole.secure.elasticsearch.config.ElasticSearchConfig;
 import com.carole.secure.system.model.dto.SysLogDTO;
 import com.carole.secure.system.model.query.SysLogQuery;
 import com.carole.secure.system.service.SysLogService;
+import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,8 @@ public class SysLogServiceImpl implements SysLogService {
         try {
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
             sourceBuilder.sort("createTime", SortOrder.DESC);
+            sourceBuilder.from((sysLogQuery.getCurrent() - 1) * sysLogQuery.getPageSize());
+            sourceBuilder.size(sysLogQuery.getPageSize());
             SearchRequest searchRequest = new SearchRequest(ElasticContext.SYS_OPERATION_LOG_INDEX);
             searchRequest.source(sourceBuilder);
             SearchResponse response = restHighLevelClient.search(searchRequest, ElasticSearchConfig.COMMON_OPTIONS);
@@ -63,7 +66,8 @@ public class SysLogServiceImpl implements SysLogService {
                     sysLogDTOList.add(sysLogDTO);
                 }
             }
-            return PageUtil.startPage(sysLogQuery.getCurrent(), sysLogQuery.getPageSize(), () -> sysLogDTOList);
+            PageInfo<SysLogDTO> pageInfo = new PageInfo<>(sysLogDTOList);
+            return PageUtil.startPage(pageInfo);
         } catch (Exception e) {
             log.error("Elastic 查询日志列表数据失败", e);
             throw new DataException(ErrorType.SERVICE_ERROR);

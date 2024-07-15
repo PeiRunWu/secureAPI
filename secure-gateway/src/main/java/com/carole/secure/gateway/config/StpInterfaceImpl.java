@@ -5,10 +5,10 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
-import com.carole.secure.gateway.client.ClientHolder;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.carole.secure.gateway.client.ClientHolder;
 
 import cn.dev33.satoken.stp.StpInterface;
 

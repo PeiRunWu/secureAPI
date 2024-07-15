@@ -1,4 +1,4 @@
-package com.carole.secure.common.properties;
+package com.carole.secure.elasticsearch.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

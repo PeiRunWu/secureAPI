@@ -1,6 +1,5 @@
-package com.carole.secure.common.aop;
+package com.carole.secure.elasticsearch.aop;
 
-import static com.carole.secure.common.context.ElasticContext.SYS_OPERATION_LOG_INDEX;
 
 import java.lang.reflect.Method;
 import java.net.InetAddress;
@@ -22,10 +21,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSONObject;
-import com.carole.secure.common.annotation.OperationLog;
-import com.carole.secure.common.config.ElasticSearchConfig;
+import com.carole.secure.common.context.ElasticContext;
 import com.carole.secure.common.exception.DataException;
 import com.carole.secure.common.type.ErrorType;
+import com.carole.secure.elasticsearch.annotation.OperationLog;
+import com.carole.secure.elasticsearch.config.ElasticSearchConfig;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.net.NetUtil;
@@ -44,7 +44,7 @@ public class OperationLogAspect {
     @Resource
     private RestHighLevelClient restHighLevelClient;
 
-    @Pointcut("@annotation(com.carole.secure.common.annotation.OperationLog)")
+    @Pointcut("@annotation(com.carole.secure.elasticsearch.annotation.OperationLog)")
     public void pointcut() {}
 
     @AfterReturning(value = "pointcut()")
@@ -73,7 +73,7 @@ public class OperationLogAspect {
                     jsonObject.put("hostName", localHost.getHostName());
                     jsonObject.put("innerIP", NetUtil.isInnerIP(localHost.getHostAddress()));
                     jsonObject.put("createTime", DateUtil.now());
-                    IndexRequest indexRequest = new IndexRequest(SYS_OPERATION_LOG_INDEX);
+                    IndexRequest indexRequest = new IndexRequest(ElasticContext.SYS_OPERATION_LOG_INDEX);
                     indexRequest.id(IdUtil.getSnowflakeNextIdStr());
                     indexRequest.source(jsonObject, XContentType.JSON);
                     restHighLevelClient.index(indexRequest, ElasticSearchConfig.COMMON_OPTIONS);

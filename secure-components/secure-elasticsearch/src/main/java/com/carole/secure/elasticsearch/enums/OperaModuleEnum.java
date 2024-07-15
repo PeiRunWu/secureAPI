@@ -1,4 +1,4 @@
-package com.carole.secure.common.enums;
+package com.carole.secure.elasticsearch.enums;
 
 /**
  * @author CaroLe

@@ -8,10 +8,10 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import com.carole.secure.api.feign.pojo.MenuDataDTO;
-import com.carole.secure.common.annotation.OperationLog;
-import com.carole.secure.common.enums.OperaModuleEnum;
 import com.carole.secure.common.result.Result;
 import com.carole.secure.common.util.PageUtil;
+import com.carole.secure.elasticsearch.annotation.OperationLog;
+import com.carole.secure.elasticsearch.enums.OperaModuleEnum;
 import com.carole.secure.system.model.dto.SysUserDTO;
 import com.carole.secure.system.model.pojo.SysUser;
 import com.carole.secure.system.model.query.SysUserQuery;

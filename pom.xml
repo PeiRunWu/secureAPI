@@ -10,7 +10,7 @@
     <description>secureAPI</description>
     <modules>
         <module>secure-system</module>
-        <module>secure-common</module>
+        <module>secure-components</module>
         <module>secure-gateway</module>
         <module>secure-framework</module>
         <module>secure-api</module>

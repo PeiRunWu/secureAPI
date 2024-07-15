@@ -1,4 +1,4 @@
-package com.carole.secure.common.config;
+package com.carole.secure.elasticsearch.config;
 
 import javax.annotation.Resource;
 
@@ -9,7 +9,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.carole.secure.common.properties.ElasticProperties;
+import com.carole.secure.elasticsearch.properties.ElasticProperties;
+
 
 /**
  * @author CaroLe

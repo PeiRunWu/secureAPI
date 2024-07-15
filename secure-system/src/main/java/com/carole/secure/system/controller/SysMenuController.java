@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.carole.secure.common.annotation.OperationLog;
-import com.carole.secure.common.enums.OperaModuleEnum;
 import com.carole.secure.common.util.PageUtil;
+import com.carole.secure.elasticsearch.annotation.OperationLog;
+import com.carole.secure.elasticsearch.enums.OperaModuleEnum;
 import com.carole.secure.system.model.dto.AssignAuthMenuDTO;
 import com.carole.secure.system.model.dto.SysMenuDTO;
 import com.carole.secure.system.model.query.SysMenuQuery;

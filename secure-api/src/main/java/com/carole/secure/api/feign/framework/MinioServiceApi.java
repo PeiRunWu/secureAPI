@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.carole.secure.api.feign.framework.fallback.MinioFallbackFactory;
+
 /**
  * @author CaroLe
  * @Date 2023/10/9 21:32
  * @Description
  */
-@FeignClient(value = "secure-framework", contextId = "MinioService")
+@FeignClient(value = "secure-framework", contextId = "MinioService", fallbackFactory = MinioFallbackFactory.class)
 public interface MinioServiceApi {
     /**
      * 上传到minio

@@ -58,6 +58,13 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- elasticsearch-->
+        <dependency>
+            <groupId>com.carole</groupId>
+            <artifactId>secure-elasticsearch</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <!--api-->
         <dependency>
             <groupId>com.carole</groupId>

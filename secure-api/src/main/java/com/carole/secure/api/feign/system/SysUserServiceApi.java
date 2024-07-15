@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.carole.secure.api.feign.pojo.MenuDataDTO;
 import com.carole.secure.api.feign.pojo.Result;
 import com.carole.secure.api.feign.pojo.SysUser;
+import com.carole.secure.api.feign.system.fallbcak.SysUserFallbackFactory;
 
 /**
  * @author CaroLe
  * @Date 2023/10/16 22:40
  * @Description
  */
-@FeignClient(value = "secure-system", contextId = "SysUserService")
+@FeignClient(value = "secure-system", contextId = "SysUserService", fallbackFactory = SysUserFallbackFactory.class)
 public interface SysUserServiceApi {
 
     /**

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
-import com.carole.secure.common.annotation.OperationLog;
-import com.carole.secure.common.enums.OperaModuleEnum;
+import com.carole.secure.elasticsearch.annotation.OperationLog;
+import com.carole.secure.elasticsearch.enums.OperaModuleEnum;
 import com.carole.secure.system.service.SysFileService;
 
 /**

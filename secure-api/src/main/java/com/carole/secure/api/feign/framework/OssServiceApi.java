@@ -1,5 +1,6 @@
 package com.carole.secure.api.feign.framework;
 
+import com.carole.secure.api.feign.framework.fallback.OssFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Date 2023/10/8 21:50
  * @Description
  */
-@FeignClient(value = "secure-framework", contextId = "OssService")
+@FeignClient(value = "secure-framework", contextId = "OssService", fallbackFactory = OssFallbackFactory.class)
 public interface OssServiceApi {
 
     /**

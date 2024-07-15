@@ -1,8 +1,9 @@
-package com.carole.secure.common.annotation;
+package com.carole.secure.elasticsearch.annotation;
 
 import java.lang.annotation.*;
 
-import com.carole.secure.common.enums.OperaModuleEnum;
+import com.carole.secure.elasticsearch.enums.OperaModuleEnum;
+
 
 /**
  * @author CaroLe

@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.carole.secure.api.feign.framework.fallback.CosFallbackFactory;
+
 /**
  * @author CaroLe
  * @Date 2023/10/8 23:06
  * @Description
  */
-@FeignClient(value = "secure-framework", contextId = "CosService")
+@FeignClient(value = "secure-framework", contextId = "CosService", fallbackFactory = CosFallbackFactory.class)
 public interface CosServiceApi {
     /**
      * 上传到腾讯云cos
