@@ -3,6 +3,7 @@ package com.carole.secure.gateway.config;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
@@ -41,8 +42,8 @@ public class StpInterfaceImpl implements StpInterface {
             List<String> permissionList = JSON.parseObject(value, new TypeReference<List<String>>() {});
             if (CollectionUtil.isEmpty(permissionList)) {
                 Future<List<String>> future = clientHolder.getPermissionList(String.valueOf(loginId));
-                redisUtil.set(RedisContext.PERMISSION_KEY + loginId, JSON.toJSONString(future.get()),
-                    RedisUtil.DEFAULT_EXPIRE);
+                redisUtil.setEx(RedisContext.PERMISSION_KEY + loginId, JSON.toJSONString(future.get()),
+                    RedisUtil.DEFAULT_EXPIRE, TimeUnit.MILLISECONDS);
                 return future.get();
             }
             return permissionList;

@@ -7,5 +7,5 @@ package com.carole.secure.redis.context;
  */
 public class RedisContext {
 
-    public static final String PERMISSION_KEY = "Permission:";
+    public static final String PERMISSION_KEY = "Authorization:login:permission:";
 }

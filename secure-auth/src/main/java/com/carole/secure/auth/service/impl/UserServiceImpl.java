@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void logout() {
-        redisUtil.deleteKey(RedisContext.PERMISSION_KEY + StpUtil.getLoginIdAsString());
+        redisUtil.delete(RedisContext.PERMISSION_KEY + StpUtil.getLoginIdAsString());
         StpUtil.logoutByTokenValue(StpUtil.getTokenValue());
     }
 
