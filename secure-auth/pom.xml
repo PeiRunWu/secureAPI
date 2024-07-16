@@ -68,6 +68,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!--redis-->
+        <dependency>
+            <groupId>com.carole</groupId>
+            <artifactId>secure-redis</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>

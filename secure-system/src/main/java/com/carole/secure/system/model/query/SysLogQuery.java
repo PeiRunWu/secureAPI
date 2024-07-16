@@ -13,11 +13,11 @@ public class SysLogQuery {
     /**
      * 当前页
      */
-    private Integer current = 1;
+    private Integer current;
 
     /**
      * 当前页大小
      */
-    private Integer pageSize = 10;
+    private Integer pageSize;
 
 }

@@ -17,32 +17,14 @@
 
     <update id="updateMenuInfo">
         UPDATE sys_menu
-        <set>
-            <if test="param.parentId !=null and param.parentId !='' ">
-                parent_id = #{param.parentId},
-            </if>
-            <if test="param.menuName !=null and param.menuName !='' ">
-                menu_name = #{param.menuName},
-            </if>
-            <if test="param.menuType !=null and param.menuType !='' ">
-                menu_type = #{param.menuType},
-            </if>
-            <if test="param.icon !=null and param.icon !='' ">
-                icon = #{param.icon},
-            </if>
-            <if test="param.orderNum !=null ">
-                order_num = #{param.orderNum},
-            </if>
-            <if test="param.perms !=null and param.perms !='' ">
-                perms = #{param.perms},
-            </if>
-            <if test="param.component !=null and param.component !='' ">
-                component = #{param.component},
-            </if>
-            <if test="param.status !=null ">
-                `status` = #{param.status},
-            </if>
-        </set>
+        SET parent_id = #{param.parentId},
+            menu_name = #{param.menuName},
+            menu_type = #{param.menuType},
+            icon      = #{param.icon},
+            order_num = #{param.orderNum},
+            perms     = #{param.perms},
+            component = #{param.component},
+            `status`  = #{param.status}
         WHERE id = #{param.id}
     </update>
 

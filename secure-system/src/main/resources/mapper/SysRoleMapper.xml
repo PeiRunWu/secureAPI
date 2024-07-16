@@ -11,14 +11,8 @@
 
     <update id="updateRoleInfo">
         UPDATE sys_role
-        <set>
-            <if test="param.roleName !='' and param.roleName !=null ">
-                role_name = #{param.roleName},
-            </if>
-            <if test="param.status !=null ">
-                `status` = #{param.status},
-            </if>
-        </set>
+        SET role_name = #{param.roleName},
+            `status`  = #{param.status}
         WHERE id = #{param.id}
     </update>
 

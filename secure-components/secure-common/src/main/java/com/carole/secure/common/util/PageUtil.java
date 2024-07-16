@@ -1,13 +1,11 @@
 package com.carole.secure.common.util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,9 +56,6 @@ public class PageUtil<T> {
     public static <T> PageUtil<T> startPage(Integer current, Integer pageSize, Supplier<List<T>> supplier) {
         PageHelper.startPage(current, pageSize);
         List<T> data = supplier.get();
-        if (CollectionUtil.isEmpty(data)) {
-            data = new ArrayList<>();
-        }
         PageInfo<T> pageInfo = new PageInfo<>(data);
         PageHelper.clearPage();
         return new PageUtil<T>(current, pageSize, pageInfo.getTotal(), pageInfo.getSize(), pageInfo.getList());

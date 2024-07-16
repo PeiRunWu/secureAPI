@@ -8,7 +8,7 @@
         <artifactId>secure-components</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
+    <packaging>jar</packaging>
     <artifactId>secure-elasticsearch</artifactId>
 
     <properties>

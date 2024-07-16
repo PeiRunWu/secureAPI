@@ -1,16 +1,23 @@
 package com.carole.secure.gateway.config;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.carole.secure.gateway.client.ClientHolder;
+import com.carole.secure.redis.context.RedisContext;
+import com.carole.secure.redis.util.RedisUtil;
 
 import cn.dev33.satoken.stp.StpInterface;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author CaroLe
@@ -24,11 +31,21 @@ public class StpInterfaceImpl implements StpInterface {
     @Resource
     private ClientHolder clientHolder;
 
+    @Resource
+    private RedisUtil redisUtil;
+
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        Future<List<String>> future = clientHolder.getPermissionList(String.valueOf(loginId));
         try {
-            return future.get();
+            String value = redisUtil.get(RedisContext.PERMISSION_KEY + loginId);
+            List<String> permissionList = JSON.parseObject(value, new TypeReference<List<String>>() {});
+            if (CollectionUtil.isEmpty(permissionList)) {
+                Future<List<String>> future = clientHolder.getPermissionList(String.valueOf(loginId));
+                redisUtil.set(RedisContext.PERMISSION_KEY + loginId, JSON.toJSONString(future.get()),
+                    RedisUtil.DEFAULT_EXPIRE);
+                return future.get();
+            }
+            return permissionList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

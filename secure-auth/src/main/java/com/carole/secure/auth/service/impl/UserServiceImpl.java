@@ -24,6 +24,8 @@ import com.carole.secure.common.context.SessionContext;
 import com.carole.secure.common.exception.DataException;
 import com.carole.secure.common.type.ErrorType;
 import com.carole.secure.common.util.CommonUaUtil;
+import com.carole.secure.redis.context.RedisContext;
+import com.carole.secure.redis.util.RedisUtil;
 
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
@@ -45,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private SysUserServiceApi sysUserServiceApi;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * 登入
@@ -77,6 +82,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void logout() {
+        redisUtil.deleteKey(RedisContext.PERMISSION_KEY + StpUtil.getLoginIdAsString());
         StpUtil.logoutByTokenValue(StpUtil.getTokenValue());
     }
 

@@ -32,30 +32,13 @@
 
     <update id="updateUserInfo">
         UPDATE sys_user
-        <set>
-            <if test="param.username !='' and param.username !=null ">
-                username = #{param.username},
-            </if>
-            <if test="param.nickname !='' and param.nickname !=null ">
-                nickname = #{param.nickname},
-            </if>
-            <if test="param.avatar !='' and param.avatar !=null ">
-                avatar = #{param.avatar},
-            </if>
-            <if test="param.phone !='' and param.phone !=null">
-                phone = #{param.phone},
-            </if>
-            <if test="param.email !='' and param.email !=null">
-                email = #{param.email},
-            </if>
-            <if test="param.avatar != '' and param.avatar !=null  ">
-                avatar = #{param.avatar},
-            </if>
-
-            <if test="param.status !=null ">
-                `status` = #{param.status},
-            </if>
-        </set>
+        SET username = #{param.username},
+            nickname = #{param.nickname},
+            avatar   = #{param.avatar},
+            phone    = #{param.phone},
+            email    = #{param.email},
+            avatar   = #{param.avatar},
+            `status` = #{param.status}
         WHERE id = #{param.id}
     </update>
 

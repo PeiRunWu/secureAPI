@@ -5,23 +5,30 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.carole</groupId>
-        <artifactId>secureAPI</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>secure-components</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <description>公共服务</description>
-    <modules>
-        <module>secure-elasticsearch</module>
-        <module>secure-common</module>
-        <module>secure-redis</module>
-    </modules>
-    <artifactId>secure-components</artifactId>
+    <packaging>jar</packaging>
+    <artifactId>secure-redis</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <!--redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
