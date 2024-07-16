@@ -1,13 +1,11 @@
 package com.carole.secure.gateway.config;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +16,7 @@ import com.carole.secure.redis.context.RedisContext;
 import com.carole.secure.redis.util.RedisUtil;
 
 import cn.dev33.satoken.stp.StpInterface;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.collection.CollectionUtil;
 
 /**
  * @author CaroLe
