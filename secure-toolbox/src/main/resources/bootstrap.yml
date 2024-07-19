@@ -1,12 +1,14 @@
 server:
-  port: 3000
+  port: 5000
 
 spring:
   application:
-    name: secure-auth
+    name: secure-toolbox
   cloud:
     nacos:
       server-addr: 39.108.18.225:8848
+      username: nacos
+      password: nacos
       config:
         namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
         group: DEFAULT_GROUP
@@ -25,17 +27,14 @@ spring:
             group: DEFAULT_GROUP
             refresh: true
 
-          - data-id: secure-redis.yml
+          - data-id: secure-saToken.yml
             group: DEFAULT_GROUP
             refresh: true
 
-          - data-id: secure-saToken.yml
+          - data-id: secure-elasticsearch.yml
             group: DEFAULT_GROUP
             refresh: true
       discovery:
         namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
         group: DEFAULT_GROUP
         register-enabled: true
-
-
-

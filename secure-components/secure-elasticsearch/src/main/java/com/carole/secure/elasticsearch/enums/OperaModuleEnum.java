@@ -22,6 +22,11 @@ public enum OperaModuleEnum {
     /**
      * 文件管理
      */
-    SYSTEM_FILE;
+    SYSTEM_FILE,
+
+    /**
+     * 数据源管理
+     */
+    DATA_SOURCE;
 
 }

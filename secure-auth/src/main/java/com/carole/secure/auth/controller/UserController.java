@@ -30,7 +30,7 @@ public class UserController {
      * 登入
      *
      * @param userInfo 用户信息
-     * @param request  请求信息
+     * @param request 请求信息
      * @return token
      */
     @PostMapping("/login")

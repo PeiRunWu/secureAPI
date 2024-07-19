@@ -26,6 +26,10 @@ spring:
           - data-id: secure-feign.yml
             group: DEFAULT_GROUP
             refresh: true
+
+          - data-id: secure-elasticsearch.yml
+            group: DEFAULT_GROUP
+            refresh: true
       discovery:
         namespace: 5d5edd43-5f01-4284-acb5-b793fcd4b05f
         group: DEFAULT_GROUP

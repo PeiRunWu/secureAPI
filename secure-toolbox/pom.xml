@@ -8,8 +8,8 @@
         <artifactId>secureAPI</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <description>授权服务</description>
-    <artifactId>secure-auth</artifactId>
+    <description>工具箱</description>
+    <artifactId>secure-toolbox</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,11 +18,16 @@
     </properties>
 
     <dependencies>
-        <!-- 公共类-->
+        <!--druid-->
         <dependency>
-            <groupId>com.carole</groupId>
-            <artifactId>secure-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--mysql-->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
         <!-- nacos-discovery -->
@@ -43,32 +48,28 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!--druid-->
+
+        <!-- common -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <groupId>com.carole</groupId>
+            <artifactId>secure-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-        <!--mysql-->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
 
-        <!--api-->
+        <!--远程服务-->
         <dependency>
             <groupId>com.carole</groupId>
             <artifactId>secure-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!--redis-->
+        <!-- elasticsearch -->
         <dependency>
             <groupId>com.carole</groupId>
-            <artifactId>secure-redis</artifactId>
+            <artifactId>secure-elasticsearch</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
 </project>

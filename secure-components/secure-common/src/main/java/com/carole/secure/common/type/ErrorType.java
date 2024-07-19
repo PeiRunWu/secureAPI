@@ -39,6 +39,10 @@ public class ErrorType extends StatusType {
 
     public static final ErrorType LOGIN_AUTH = new ErrorType(217, "用户未登陆");
 
+    public static final ErrorType DRIVER_TYPE_ERROR = new ErrorType(218, "未查询到数据库类型");
+
+    public static final ErrorType DATA_SOURCE_CONNECT_ERROR = new ErrorType(219, "数据库连接失败");
+
     public ErrorType(Integer code, String msg) {
         super(code, msg);
     }

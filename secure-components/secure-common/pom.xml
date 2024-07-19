@@ -54,6 +54,12 @@
             <artifactId>sa-token-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Sa-Token 整合 Redis -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

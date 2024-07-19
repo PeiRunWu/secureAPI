@@ -15,6 +15,7 @@
         <module>secure-framework</module>
         <module>secure-api</module>
         <module>secure-auth</module>
+        <module>secure-toolbox</module>
     </modules>
 
     <properties>

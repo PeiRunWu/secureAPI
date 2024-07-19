@@ -1,6 +1,7 @@
 package com.carole.secure.common.interceptor;
 
 import static com.carole.secure.common.context.BaseContext.INSERT;
+import static com.carole.secure.common.context.BaseContext.UPDATE;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -15,6 +16,7 @@ import org.apache.ibatis.plugin.Signature;
 
 import com.carole.secure.common.annotation.TableField;
 import com.carole.secure.common.enums.FieldTypeEnum;
+import com.carole.secure.common.enums.OperationSupport;
 import com.carole.secure.common.exception.DataException;
 import com.carole.secure.common.handler.field.*;
 import com.carole.secure.common.type.ErrorType;
@@ -38,6 +40,11 @@ public class TableIdInterceptor implements Interceptor {
      */
     private final Map<Class<?>, List<FieldHandler>> handlerMap = new ConcurrentHashMap<>();
 
+    /**
+     * 存储当前对象操作的类型
+     */
+    private final Map<Class<?>, String> operationMap = new ConcurrentHashMap<>();
+
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         // 获取方法参数
@@ -45,44 +52,35 @@ public class TableIdInterceptor implements Interceptor {
         MappedStatement mappedStatement = (MappedStatement)args[0];
         // 实体对象
         Object entity = args[1];
-        if (StrUtil.equals(INSERT, mappedStatement.getSqlCommandType().name())) {
-            // 将实体存入Set
-            Set<Object> entitySet = getEntity(entity);
-            for (Object object : entitySet) {
-                process(object);
-            }
+        String sqlCommandType = mappedStatement.getSqlCommandType().name();
+        if (StrUtil.equalsAny(sqlCommandType, INSERT, UPDATE)) {
+            process(entity, sqlCommandType);
         }
         return invocation.proceed();
     }
 
-    private void process(Object object) {
+    private void process(Object object, String sqlCommandType) {
         Class<?> objClass = object.getClass();
         List<FieldHandler> handlerList = handlerMap.get(objClass);
+        String type = operationMap.get(objClass);
         try {
             SYNC:
-            if (handlerList == null) {
+            if (CollectionUtil.isEmpty(handlerList) || !StrUtil.equals(type, sqlCommandType)) {
                 synchronized (this) {
                     handlerList = handlerMap.get(objClass);
-                    if (CollectionUtil.isNotEmpty(handlerList)) {
+                    type = operationMap.get(objClass);
+                    if (CollectionUtil.isNotEmpty(handlerList) && StrUtil.equals(type, sqlCommandType)) {
                         break SYNC;
                     }
                     handlerMap.put(objClass, handlerList = new ArrayList<>());
+                    operationMap.put(objClass, sqlCommandType);
                     Field[] allFields = ReflectUtil.getFields(objClass,
                         input -> input != null && input.getAnnotation(TableField.class) != null);
                     for (Field field : allFields) {
                         TableField annotation = field.getAnnotation(TableField.class);
-                        if (field.getType().isAssignableFrom(String.class)) {
-                            if (annotation.value().equals(FieldTypeEnum.ASSIGN_ID)) {
-                                handlerList.add(new SnowIdStringHandler(field));
-                            } else if (annotation.value().equals(FieldTypeEnum.ASSIGN_UUID)) {
-                                handlerList.add(new UUIDHandler(field));
-                            } else if (annotation.value().equals(FieldTypeEnum.BCRYPT)) {
-                                handlerList.add(new BcryptHandler(field));
-                            }
-                        } else if (field.getType().isAssignableFrom(Long.class)) {
-                            if (annotation.value().equals(FieldTypeEnum.ASSIGN_ID)) {
-                                handlerList.add(new SnowIdLongHandler(field));
-                            }
+                        OperationSupport operations = annotation.operations();
+                        if (operations == OperationSupport.BOTH || operations.name().equals(sqlCommandType)) {
+                            handlerList.add(createHandlerForField(field, annotation));
                         }
                     }
                 }
@@ -95,24 +93,21 @@ public class TableIdInterceptor implements Interceptor {
         }
     }
 
-    /**
-     * object是需要插入的实体数据,它可能是对象,也可能是批量插入的对象。 如果是单个对象,那么object就是当前对象
-     * 如果是批量插入对象，那么object就是一个map集合,key值为"list",value为ArrayList集合对象
-     */
-    private Set<Object> getEntity(Object entity) {
-        Set<Object> set = new HashSet<>();
-        if (entity instanceof Map) {
-            Collection<?> values = ((Map<?, ?>)entity).values();
-            for (Object value : values) {
-                if (value instanceof Collection) {
-                    set.addAll((Collection<?>)value);
-                } else {
-                    set.add(value);
-                }
+    private FieldHandler createHandlerForField(Field field, TableField annotation) {
+        if (field.getType().isAssignableFrom(String.class)) {
+            switch (annotation.value()) {
+                case ASSIGN_ID:
+                    return new SnowIdStringHandler(field);
+                case ASSIGN_UUID:
+                    return new UUIDHandler(field);
+                case BCRYPT:
+                    return new BcryptHandler(field);
             }
-        } else {
-            set.add(entity);
+        } else if (field.getType().isAssignableFrom(Long.class)) {
+            if (annotation.value() == FieldTypeEnum.ASSIGN_ID) {
+                return new SnowIdLongHandler(field);
+            }
         }
-        return set;
+        throw new DataException(ErrorType.PARSING_ERROR);
     }
 }

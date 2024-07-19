@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carole.secure.toolbox.mapper.DataSourceMapper">
+
+    <insert id="insert">
+        INSERT INTO data_source (id, name, ip, port, username, password, table_name, driver_type, login_id)
+        VALUES (#{param.id},
+                #{param.name},
+                #{param.ip},
+                #{param.port},
+                #{param.username},
+                #{param.password},
+                #{param.tableName},
+                #{param.driverType},
+                #{param.loginId})
+    </insert>
+
+    <update id="updateDataSourceInfo">
+        UPDATE
+            data_source
+        SET name        = #{param.name},
+            ip          = #{param.ip},
+            port        = #{param.port},
+            username    = #{param.username},
+            password    = #{param.password},
+            table_name  = #{param.tableName},
+            driver_type = #{param.driverType}
+        WHERE id = #{param.id}
+    </update>
+
+    <delete id="deleteDataSourceInfo">
+        DELETE
+        FROM data_source
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getDataSourceInfoByPage" resultType="com.carole.secure.toolbox.model.dto.DataSourceDTO">
+        SELECT id,name, ip, port, username, table_name, driver_type
+        FROM data_source
+        <where>
+            login_id = #{param.loginId}
+            <if test="param.tableName !=null and param.tableName !='' ">
+                AND table_name LIKE CONCAT ('%',#{param.tableName},'%')
+            </if>
+
+            <if test="param.name != null and param.name != '' ">
+                AND name LIKE CONCAT ('%',#{param.name},'%')
+            </if>
+
+            <if test="param.driverType != null and param.driverType != '' ">
+                AND driver_type = #{param.driverType}
+            </if>
+        </where>
+
+    </select>
+</mapper>
+

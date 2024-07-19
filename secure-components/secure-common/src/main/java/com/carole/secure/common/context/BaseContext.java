@@ -9,10 +9,11 @@ public class BaseContext {
 
     public static final String INSERT = "INSERT";
 
+    public static final String UPDATE = "UPDATE";
+
     public static final String ZERO = "0";
 
     public static final String SEPARATOR = "/";
 
     public static final String UNKNOWN = "Unknown";
-
 }

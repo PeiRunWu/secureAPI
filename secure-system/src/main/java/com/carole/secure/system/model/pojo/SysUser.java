@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.carole.secure.common.annotation.TableField;
 import com.carole.secure.common.enums.FieldTypeEnum;
+import com.carole.secure.common.enums.OperationSupport;
 
 import lombok.Data;
 
@@ -37,7 +38,7 @@ public class SysUser implements Serializable {
     /**
      * 密码
      */
-    @TableField(FieldTypeEnum.BCRYPT)
+    @TableField(value = FieldTypeEnum.BCRYPT, operations = OperationSupport.BOTH)
     private String password;
 
     /**

@@ -32,8 +32,7 @@
 
     <update id="updateUserInfo">
         UPDATE sys_user
-        SET username = #{param.username},
-            nickname = #{param.nickname},
+        SET nickname = #{param.nickname},
             avatar   = #{param.avatar},
             phone    = #{param.phone},
             email    = #{param.email},
