@@ -44,4 +44,12 @@ public interface DataSourceMapper {
      * @param id 主键Id
      */
     void deleteDataSourceInfo(String id);
+
+    /**
+     * 通过Id 获取数据源信息
+     * 
+     * @param id id
+     * @return DataSource
+     */
+    DataSource getDataSourceInfoById(String id);
 }

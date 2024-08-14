@@ -2,6 +2,8 @@ package com.carole.secure.toolbox.controller;
 
 import javax.annotation.Resource;
 
+import com.carole.secure.toolbox.model.dto.DataFiledDTO;
+import com.carole.secure.toolbox.model.dto.DataTableDTO;
 import org.springframework.web.bind.annotation.*;
 
 import com.carole.secure.common.util.PageUtil;
@@ -11,6 +13,8 @@ import com.carole.secure.toolbox.model.dto.DataSourceDTO;
 import com.carole.secure.toolbox.model.query.DataSourceQuery;
 import com.carole.secure.toolbox.model.vo.DataSourceVO;
 import com.carole.secure.toolbox.service.DataSourceService;
+
+import java.util.List;
 
 /**
  * @author CaroLe
@@ -76,6 +80,38 @@ public class DataSourceController {
     @OperationLog(operaDesc = "删除数据库连接", operaModule = OperaModuleEnum.DATA_SOURCE)
     public void deleteDataSourceInfo(@PathVariable("id") String id) {
         dataSourceService.deleteDataSourceInfo(id);
+    }
+
+    /**
+     * 获取所有数据源
+     * 
+     * @return List
+     */
+    @GetMapping("/getAllDataSource")
+    public List<DataSourceDTO> getAllDataSource() {
+        return dataSourceService.getAllDataSource();
+    }
+
+    /**
+     * 获取当前库下所有表名 -
+     * 
+     * @param id 库名Id
+     * @return List
+     */
+    @GetMapping("/getTableInfo/{id}")
+    public List<DataTableDTO> getTableInfo(@PathVariable("id") String id) {
+        return dataSourceService.getTableInfo(id);
+    }
+
+    /**
+     * 获取当前表的字段信息
+     * 
+     * @param dataSourceVO dataSourceVO
+     * @return List
+     */
+    @PostMapping("/getFiledInfo")
+    public List<DataFiledDTO> getFiledInfo(@RequestBody DataSourceVO dataSourceVO) {
+        return dataSourceService.getFiledInfo(dataSourceVO);
     }
 
 }

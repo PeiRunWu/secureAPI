@@ -53,5 +53,18 @@
         </where>
 
     </select>
+
+    <select id="getDataSourceInfoById" resultType="com.carole.secure.toolbox.model.pojo.DataSource">
+        SELECT id,
+               name,
+               ip,
+               port,
+               username,
+               password,
+               table_name,
+               driver_type
+        FROM data_source
+        WHERE id = #{id}
+    </select>
 </mapper>
 

@@ -4,9 +4,7 @@ import static com.carole.secure.common.context.BaseContext.INSERT;
 import static com.carole.secure.common.context.BaseContext.UPDATE;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.ibatis.executor.Executor;
@@ -56,7 +54,10 @@ public class TableIdInterceptor implements Interceptor {
         Object entity = args[1];
         String sqlCommandType = mappedStatement.getSqlCommandType().name();
         if (StrUtil.equalsAny(sqlCommandType, INSERT, UPDATE)) {
-            process(entity, sqlCommandType);
+            Set<Object> entitySet = getEntity(entity);
+            for (Object object : entitySet) {
+                process(object, sqlCommandType);
+            }
         }
         return invocation.proceed();
     }
@@ -111,5 +112,22 @@ public class TableIdInterceptor implements Interceptor {
             }
         }
         throw new DataException(ErrorType.PARSING_ERROR);
+    }
+
+    private Set<Object> getEntity(Object entity) {
+        Set<Object> set = new LinkedHashSet<>();
+        if (entity instanceof Map) {
+            Collection<?> values = ((Map<?, ?>)entity).values();
+            for (Object value : values) {
+                if (value instanceof Collection) {
+                    set.addAll((Collection<?>)value);
+                } else {
+                    set.add(value);
+                }
+            }
+        } else {
+            set.add(entity);
+        }
+        return set;
     }
 }

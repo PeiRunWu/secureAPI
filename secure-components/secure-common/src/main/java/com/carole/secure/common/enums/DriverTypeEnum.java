@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum DriverTypeEnum {
-    MYSQL(0, "com.mysql.cj.jdbc.Driver", "jdbc:mysql://%s:%s/%s");
+    MYSQL(0, "com.mysql.cj.jdbc.Driver", "jdbc:mysql://%s:%s/%s?useInformationSchema=true");
 
     private final Integer driverType;
 

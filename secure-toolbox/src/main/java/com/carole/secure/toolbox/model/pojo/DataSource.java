@@ -49,7 +49,6 @@ public class DataSource implements Serializable {
     /**
      * 密码
      */
-    @TableField(value = FieldTypeEnum.BCRYPT, operations = OperationSupport.BOTH)
     private String password;
 
     /**

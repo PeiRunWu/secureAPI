@@ -1,5 +1,6 @@
 package com.carole.secure.toolbox.model.query;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @Description
  */
 @Data
+@Builder
 public class DataSourceQuery {
     /**
      * 当前页
